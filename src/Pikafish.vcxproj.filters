@@ -69,6 +69,9 @@
     <ClCompile Include="nnue\features\half_ka_v2_hm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="papi\paip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="benchmark.h">
@@ -156,6 +159,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="nnue\layers\sqr_clipped_relu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="papi\paip.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

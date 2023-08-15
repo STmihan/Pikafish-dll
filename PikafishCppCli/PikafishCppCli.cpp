@@ -1,10 +1,8 @@
 #include "papi/paip.h"
 
-int main(int argc, char* argv[])
+int main()
 {
-    PAIP::init();
-    PAIP::run("go depth 10");
-    PAIP::shutdown();
-    
-    return 0;
+    PAIP_init();
+    PAIP_run("go depth 10");
+    PAIP_shutdown();
 }

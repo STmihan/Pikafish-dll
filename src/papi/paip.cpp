@@ -17,9 +17,9 @@ void PAIP::init()
     std::cout << Stockfish::engine_info() << std::endl;
 
     std::string path = std::filesystem::current_path().string();
-    auto argv = new char* [1];
+    auto argv = new char*[1];
     argv[0] = path.data();
-    
+
     Stockfish::CommandLine::init(1, argv);
     Stockfish::UCI::init(Stockfish::Options);
     Stockfish::Tune::init();
@@ -44,7 +44,7 @@ void PAIP::run(const char* command)
     argv.reserve(tokens.size());
     for (const auto& token : tokens)
         argv.push_back(token.c_str());
-	
+
     Stockfish::UCI::run(argv.size(), const_cast<char**>(argv.data()));
 }
 
@@ -54,3 +54,17 @@ void PAIP::shutdown()
 }
 
 
+void PAIP_init()
+{
+    PAIP::init();
+}
+
+void PAIP_run(const char* command)
+{
+    PAIP::run(command);
+}
+
+void PAIP_shutdown()
+{
+    PAIP::shutdown();
+}
