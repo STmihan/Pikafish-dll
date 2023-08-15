@@ -76,6 +76,7 @@ private:
 
 void init(OptionsMap&);
 void loop(int argc, char* argv[]);
+void run(int argc, char* argv[]);
 int to_cp(Value v);
 std::string value(Value v);
 std::string square(Square s);
