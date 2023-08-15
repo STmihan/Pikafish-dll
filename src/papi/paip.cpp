@@ -54,17 +54,19 @@ void PAIP::shutdown()
 }
 
 
-void PAIP_init()
+extern "C" {
+void PIKAFISH_API PAIP_init()
 {
     PAIP::init();
 }
 
-void PAIP_run(const char* command)
+void PIKAFISH_API PAIP_run(const char* command)
 {
     PAIP::run(command);
 }
 
-void PAIP_shutdown()
+void PIKAFISH_API PAIP_shutdown()
 {
     PAIP::shutdown();
+}
 }

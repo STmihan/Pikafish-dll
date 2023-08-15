@@ -71,8 +71,8 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>NDEBUG;USE_POPCNT;USE_PEXT</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PreprocessorDefinitions>NDEBUG;USE_POPCNT;USE_PEXT;PIKAFISH_EXPORTS</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -104,9 +104,9 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
-      <PreprocessorDefinitions>NDEBUG;USE_POPCNT;USE_PEXT</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;USE_POPCNT;USE_PEXT;PIKAFISH_EXPORTS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <StackReserveSize>8388608 </StackReserveSize>

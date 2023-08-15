@@ -754,10 +754,12 @@ void init([[maybe_unused]] int argc, char* argv[]) {
     pathSeparator = "\\";
   #ifdef _MSC_VER
     // Under windows argv[0] may not have the extension. Also _get_pgmptr() had
-    // issues in some windows 10 versions, so check returned values carefully.
-    char* pgmptr = nullptr;
-    if (!_get_pgmptr(&pgmptr) && pgmptr != nullptr && *pgmptr)
-        argv0 = pgmptr;
+    // // issues in some windows 10 versions, so check returned values carefully.
+    // char* pgmptr = nullptr;
+    // DWORD module_file_name_a = GetModuleFileNameA(nullptr, argv[0], MAX_PATH);
+    //
+    // if (!_get_pgmptr(&pgmptr) && pgmptr != nullptr && *pgmptr)
+    //     argv0 = pgmptr;
   #endif
 #else
     pathSeparator = "/";
