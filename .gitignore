@@ -10,7 +10,15 @@ src/.depend
 # Built binary
 src/pikafish*
 src/-lstdc++.res
+!src/*vcxproj*
 
 # Neural network for the NNUE evaluation
 **/*.nnue
 
+Debug
+Release
+x64
+x86
+
+.vs
+.idea
