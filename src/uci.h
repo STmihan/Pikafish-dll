@@ -67,6 +67,7 @@ public:
 
 private:
   friend std::ostream& operator<<(std::ostream&, const OptionsMap&);
+  friend std::string operator+(const std::string& s, const OptionsMap& om);
 
   std::string defaultValue, currentValue, type;
   int min, max;

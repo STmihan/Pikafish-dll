@@ -34,6 +34,7 @@
 #include "tt.h"
 #include "uci.h"
 #include "nnue/evaluate_nnue.h"
+#include "output/output.h"
 
 namespace Stockfish {
 
@@ -116,7 +117,7 @@ namespace {
             pos.undo_move(m);
         }
         if (Root)
-            sync_cout << UCI::move(m) << ": " << cnt << sync_endl;
+            Output::output(UCI::move(m) + ": " + std::to_string(cnt));
     }
     return nodes;
   }
@@ -153,7 +154,7 @@ void MainThread::search() {
   if (Limits.perft)
   {
       nodes = perft<true>(rootPos, Limits.perft);
-      sync_cout << "\nNodes searched: " << nodes << "\n" << sync_endl;
+      Output::output("\nNodes searched: " + std::to_string(nodes) + "\n");
       return;
   }
 
@@ -166,9 +167,7 @@ void MainThread::search() {
   if (rootMoves.empty())
   {
       rootMoves.emplace_back(MOVE_NONE);
-      sync_cout << "info depth 0 score "
-                << UCI::value(-VALUE_MATE)
-                << sync_endl;
+      Output::output("info depth 0 score" + UCI::value(-VALUE_MATE));
   }
   else
   {
@@ -209,14 +208,14 @@ void MainThread::search() {
 
   // Send again PV info if we have a new best thread
   if (bestThread != this)
-      sync_cout << UCI::pv(bestThread->rootPos, bestThread->completedDepth) << sync_endl;
+      Output::output(UCI::pv(bestThread->rootPos, bestThread->completedDepth));
 
-  sync_cout << "bestmove " << UCI::move(bestThread->rootMoves[0].pv[0]);
+  Output::output("bestmove " + UCI::move(bestThread->rootMoves[0].pv[0]));
 
   if (bestThread->rootMoves[0].pv.size() > 1 || bestThread->rootMoves[0].extract_ponder_from_tt(rootPos))
-      std::cout << " ponder " << UCI::move(bestThread->rootMoves[0].pv[1]);
+      Output::output(" ponder " + UCI::move(bestThread->rootMoves[0].pv[1]));
 
-  std::cout << sync_endl;
+  Output::output("\n");
 }
 
 
@@ -339,7 +338,7 @@ void Thread::search() {
                   && multiPV == 1
                   && (bestValue <= alpha || bestValue >= beta)
                   && Time.elapsed() > 3000)
-                  sync_cout << UCI::pv(rootPos, rootDepth) << sync_endl;
+                  Output::output(UCI::pv(rootPos, rootDepth));
 
               // In case of failing low/high increase aspiration window and
               // re-search, otherwise exit the loop.
@@ -370,7 +369,7 @@ void Thread::search() {
 
           if (    mainThread
               && (Threads.stop || pvIdx + 1 == multiPV || Time.elapsed() > 3000))
-              sync_cout << UCI::pv(rootPos, rootDepth) << sync_endl;
+              Output::output(UCI::pv(rootPos, rootDepth));
       }
 
       if (!Threads.stop)

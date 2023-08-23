@@ -81,6 +81,8 @@ public:
   Position(const Position&) = delete;
   Position& operator=(const Position&) = delete;
 
+  std::string to_str() const;
+
   // FEN string input/output
   Position& set(const std::string& fenStr, StateInfo* si, Thread* th);
   Position& set(const Position& pos, StateInfo* si, Thread* th);
@@ -186,6 +188,7 @@ private:
 };
 
 std::ostream& operator<<(std::ostream& os, const Position& pos);
+
 
 inline Color Position::side_to_move() const {
   return sideToMove;

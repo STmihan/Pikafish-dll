@@ -32,6 +32,8 @@
 
 #include "evaluate_nnue.h"
 
+#include "../output/output.h"
+
 namespace Stockfish::Eval::NNUE {
 
   // Input feature converter
@@ -381,7 +383,7 @@ namespace Stockfish::Eval::NNUE {
         {
              msg = "Failed to export a net. A non-embedded net can only be saved if the filename is specified";
 
-             sync_cout << msg << sync_endl;
+             Output::output(msg);
              return false;
         }
         actualFilename = EvalFileDefaultName;
@@ -393,7 +395,7 @@ namespace Stockfish::Eval::NNUE {
     msg = saved ? "Network saved successfully to " + actualFilename
                 : "Failed to export a net";
 
-    sync_cout << msg << sync_endl;
+    Output::output(msg);
     return saved;
   }
 

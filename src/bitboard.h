@@ -294,7 +294,7 @@ inline Bitboard attacks_bb(PieceType pt, Square s, Bitboard occupied) {
 
 inline int popcount(Bitboard b) {
 
-#ifndef USE_POPCNT
+#ifndef definde(USE_POPCNT)
 
   union { Bitboard bb; uint16_t u[8]; } v = { b };
   return  PopCnt16[v.u[0]] + PopCnt16[v.u[1]] + PopCnt16[v.u[2]] + PopCnt16[v.u[3]]
@@ -320,22 +320,38 @@ inline Square lsb(Bitboard b) {
 #if defined(_MSC_VER) // MSVC
 
   unsigned long idx;
+#if defined(NN_NINTENDO_SDK)
+  if (uint32_t(b))
+#else
   if (uint64_t(b))
+#endif
   {
+#if defined(NN_NINTENDO_SDK)
+  _BitScanForward(&idx, uint32_t(b));
+  return Square(idx);
+#elif defined(_WIN64)
       _BitScanForward64(&idx, b);
       return Square(idx);
+
+#endif
   }
   else
   {
+#if defined(NN_NINTENDO_SDK)
+      _BitScanForward(&idx, uint32_t(b >> 64));
+      return Square(idx + 64);
+#elif defined(_WIN64)
       _BitScanForward64(&idx, b >> 64);
       return Square(idx + 64);
+
+#endif
   }
 
 #else // Assumed gcc or compatible compiler
-
-    if (uint64_t(b))
-        return Square(__builtin_ctzll(b));
-    return Square(__builtin_ctzll(b >> 64) + 64);
+    //
+    // if (uint64_t(b))
+    //     return Square(__builtin_ctzll(b));
+    // return Square(__builtin_ctzll(b >> 64) + 64);
 
 #endif
 }

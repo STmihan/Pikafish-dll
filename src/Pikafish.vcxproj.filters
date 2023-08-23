@@ -72,6 +72,9 @@
     <ClCompile Include="papi\paip.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="output\output.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="benchmark.h">
@@ -162,6 +165,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="papi\paip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="output\output.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

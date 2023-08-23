@@ -20,12 +20,12 @@
 #include "search.h"
 #include "thread.h"
 #include "uci.h"
+#include "output/output.h"
 
 using namespace Stockfish;
 
 int main(int argc, char* argv[]) {
-
-  std::cout << engine_info() << std::endl;
+  Output::output(engine_info());
 
   CommandLine::init(argc, argv);
   UCI::init(Options);

@@ -103,6 +103,11 @@ std::ostream& operator<<(std::ostream& os, const OptionsMap& om) {
   return os;
 }
 
+std::string operator+(const std::string& s, const OptionsMap& om) {
+      std::ostringstream oss;
+      oss << om;
+      return s + oss.str();
+}
 
 /// Option class constructors and conversion operators
 

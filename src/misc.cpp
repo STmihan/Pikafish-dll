@@ -26,7 +26,11 @@
 #define NOMINMAX
 #endif
 
+#ifdef NX
+#include "C:/Program Files (x86)/Windows Kits/10/Include/10.0.22621.0/um/winnt.h"
+#else
 #include <windows.h>
+#endif
 // The needed Windows API for processor groups could be missed from old Windows
 // versions, so instead of calling them directly (forcing the linker to resolve
 // the calls at compile time), try to load them at runtime. To do this we need
@@ -52,6 +56,7 @@ using fun8_t = bool(*)(HANDLE, BOOL, PTOKEN_PRIVILEGES, DWORD, PTOKEN_PRIVILEGES
 #include <sstream>
 #include <string_view>
 #include <vector>
+#include <string>
 
 #if defined(__linux__) && !defined(__ANDROID__)
 #include <stdlib.h>

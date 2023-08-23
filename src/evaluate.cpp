@@ -32,6 +32,7 @@
 #include "uci.h"
 
 #include "nnue/evaluate_nnue.h"
+#include "output/output.h"
 
 using namespace std;
 
@@ -81,16 +82,16 @@ namespace Eval {
         string msg4 = "The default net can be downloaded from: https://github.com/official-pikafish/Networks/releases/download/master-net/" + std::string(EvalFileDefaultName);
         string msg5 = "The engine will be terminated now.";
 
-        sync_cout << "info string ERROR: " << msg1 << sync_endl;
-        sync_cout << "info string ERROR: " << msg2 << sync_endl;
-        sync_cout << "info string ERROR: " << msg3 << sync_endl;
-        sync_cout << "info string ERROR: " << msg4 << sync_endl;
-        sync_cout << "info string ERROR: " << msg5 << sync_endl;
+        Output::output("info string ERROR: " + msg1);
+        Output::output("info string ERROR: " + msg2);
+        Output::output("info string ERROR: " + msg3);
+        Output::output("info string ERROR: " + msg4);
+        Output::output("info string ERROR: " + msg5);
 
         exit(EXIT_FAILURE);
     }
 
-    sync_cout << "info string NNUE evaluation using " << eval_file << " enabled" << sync_endl;
+    Output::output("info string NNUE evaluation using " + eval_file + " enabled");
   }
 }
 

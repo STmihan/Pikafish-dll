@@ -32,6 +32,7 @@
 #include "tt.h"
 #include "uci.h"
 #include "nnue/evaluate_nnue.h"
+#include "output/output.h"
 
 using namespace std;
 
@@ -88,7 +89,7 @@ namespace {
 
     Eval::NNUE::verify();
 
-    sync_cout << "\n" << Eval::trace(p) << sync_endl;
+    Output::output("\n" + Eval::trace(p));
   }
 
 
@@ -112,7 +113,7 @@ namespace {
     if (Options.count(name))
         Options[name] = value;
     else
-        sync_cout << "No such option: " << name << sync_endl;
+        Output::output("No such option: " + name);
   }
 
 
@@ -263,24 +264,22 @@ void UCI::loop(int argc, char* argv[]) {
           Threads.main()->ponder = false; // Switch to the normal search
 
       else if (token == "uci")
-          sync_cout << "id name " << engine_info(true)
-                    << "\n"       << Options
-                    << "\nuciok"  << sync_endl;
+          Output::output("id name " + engine_info(true) + "\n" + Options + "\nuciok");
 
       else if (token == "setoption")  setoption(is);
       else if (token == "go")         go(pos, is, states);
       else if (token == "position")   position(pos, is, states);
       else if (token == "fen" || token == "startpos") is.seekg(0), position(pos, is, states);
       else if (token == "ucinewgame") Search::clear();
-      else if (token == "isready")    sync_cout << "readyok" << sync_endl;
+      else if (token == "isready")    Output::output("readyok");
 
       // Add custom non-UCI commands, mainly for debugging purposes.
       // These commands must not be used during a search!
       else if (token == "flip")     pos.flip();
       else if (token == "bench")    bench(pos, is, states);
-      else if (token == "d")        sync_cout << pos << sync_endl;
+      else if (token == "d")        Output::output(pos.to_str());
       else if (token == "eval")     trace_eval(pos);
-      else if (token == "compiler") sync_cout << compiler_info() << sync_endl;
+      else if (token == "compiler") Output::output(compiler_info());
       else if (token == "export_net")
       {
           std::optional<std::string> filename;
@@ -290,15 +289,14 @@ void UCI::loop(int argc, char* argv[]) {
           Eval::NNUE::save_eval(filename);
       }
       else if (token == "--help" || token == "help" || token == "--license" || token == "license")
-          sync_cout << "\nPikafish is a powerful xiangqi engine for playing and analyzing."
-                       "\nIt is released as free software licensed under the GNU GPLv3 License."
-                       "\nPikafish is normally used with a graphical user interface (GUI) and implements"
-                       "\nthe Universal Chess Interface (UCI) protocol to communicate with a GUI, an API, etc."
-                       "\nFor any further information, visit https://github.com/official-pikafish/Pikafish#readme"
-                       "\nor read the corresponding README.md and Copying.txt files distributed along with this program.\n" << sync_endl;
+          Output::output("\nPikafish is a powerful xiangqi engine for playing and analyzing."
+              "\nIt is released as free software licensed under the GNU GPLv3 License."
+              "\nPikafish is normally used with a graphical user interface (GUI) and implements"
+              "\nthe Universal Chess Interface (UCI) protocol to communicate with a GUI, an API, etc."
+              "\nFor any further information, visit https://github.com/official-pikafish/Pikafish#readme"
+              "\nor read the corresponding README.md and Copying.txt files distributed along with this program.\n");
       else if (!token.empty() && token[0] != '#')
-          sync_cout << "Unknown command: '" << cmd << "'. Type help for more information." << sync_endl;
-
+          Output::output("Unknown command: '" + cmd + "'. Type help for more information.");
   } while (token != "quit" && argc == 1); // The command-line arguments are one-shot
 }
 
@@ -322,7 +320,8 @@ void UCI::run(int argc, char* argv[])
     token.clear(); // Avoid a stale if getline() returns nothing or a blank line
     is >> skipws >> token;
 
-    if (token == "quit"|| token == "stop")
+    if (token == "quit"
+        || token == "stop")
         Threads.stop = true;
 
     // The GUI sends 'ponderhit' to tell that the user has played the expected move.
@@ -333,27 +332,22 @@ void UCI::run(int argc, char* argv[])
         Threads.main()->ponder = false; // Switch to the normal search
 
     else if (token == "uci")
-        sync_cout << "id name " << engine_info(true)
-            << "\n" << Options
-            << "\nuciok" << sync_endl;
+        Output::output("id name " + engine_info(true) + "\n" + Options + "\nuciok");
 
     else if (token == "setoption") setoption(is);
     else if (token == "go") go(pos, is, states);
     else if (token == "position") position(pos, is, states);
     else if (token == "fen" || token == "startpos") is.seekg(0), position(pos, is, states);
     else if (token == "ucinewgame") Search::clear();
-    else if (token == "isready")
-        sync_cout << "readyok" << sync_endl;
+    else if (token == "isready") Output::output("readyok");
 
     // Add custom non-UCI commands, mainly for debugging purposes.
     // These commands must not be used during a search!
     else if (token == "flip") pos.flip();
     else if (token == "bench") bench(pos, is, states);
-    else if (token == "d")
-        sync_cout << pos << sync_endl;
+    else if (token == "d") Output::output(pos.to_str());
     else if (token == "eval") trace_eval(pos);
-    else if (token == "compiler")
-        sync_cout << compiler_info() << sync_endl;
+    else if (token == "compiler") Output::output(compiler_info());
     else if (token == "export_net")
     {
         std::optional<std::string> filename;
@@ -363,15 +357,14 @@ void UCI::run(int argc, char* argv[])
         Eval::NNUE::save_eval(filename);
     }
     else if (token == "--help" || token == "help" || token == "--license" || token == "license")
-        sync_cout << "\nPikafish is a powerful xiangqi engine for playing and analyzing."
+        Output::output("\nPikafish is a powerful xiangqi engine for playing and analyzing."
             "\nIt is released as free software licensed under the GNU GPLv3 License."
             "\nPikafish is normally used with a graphical user interface (GUI) and implements"
             "\nthe Universal Chess Interface (UCI) protocol to communicate with a GUI, an API, etc."
             "\nFor any further information, visit https://github.com/official-pikafish/Pikafish#readme"
-            "\nor read the corresponding README.md and Copying.txt files distributed along with this program.\n" <<
-            sync_endl;
+            "\nor read the corresponding README.md and Copying.txt files distributed along with this program.\n");
     else if (!token.empty() && token[0] != '#')
-        sync_cout << "Unknown command: '" << cmd << "'. Type help for more information." << sync_endl;
+        Output::output("Unknown command: '" + cmd + "'. Type help for more information.");
 }
 
 /// Turns a Value to an integer centipawn number,

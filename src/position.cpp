@@ -75,6 +75,13 @@ std::ostream& operator<<(std::ostream& os, const Position& pos) {
   return os;
 }
 
+std::string Position::to_str() const
+{
+    std::ostringstream ss;
+    ss << *this;
+    return ss.str();
+}
+
 
 /// Position::init() initializes at startup the various arrays used to compute hash keys
 
@@ -88,7 +95,6 @@ void Position::init() {
 
   Zobrist::side = rng.rand<Key>();
 }
-
 
 /// Position::set() initializes the position object with the given FEN string.
 /// This function is not very robust - make sure that input FENs are correct,

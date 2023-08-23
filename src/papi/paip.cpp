@@ -1,6 +1,9 @@
-﻿#include "paip.h"
+﻿#if !defined(NN_NINTENDO_SDK)
+#include "paip.h"
 
+#if !defined(NN_NINTENDO_SDK)
 #include <filesystem>
+#endif
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -10,15 +13,21 @@
 #include "../search.h"
 #include "../thread.h"
 #include "../uci.h"
+#include "../output/output.h"
 
 
 void PAIP::init()
 {
-    std::cout << Stockfish::engine_info() << std::endl;
-
+    Stockfish::Output::init();
+    Stockfish::Output::output(Stockfish::engine_info());
+    auto argv = new char* [1];
+#if !defined(NN_NINTENDO_SDK)
     std::string path = std::filesystem::current_path().string();
-    auto argv = new char*[1];
-    argv[0] = path.data();
+    argv[0] = path.data;
+#else
+    argv[0] = "";
+#endif
+
 
     Stockfish::CommandLine::init(1, argv);
     Stockfish::UCI::init(Stockfish::Options);
@@ -51,22 +60,34 @@ void PAIP::run(const char* command)
 void PAIP::shutdown()
 {
     Stockfish::Threads.set(0);
+    Stockfish::Output::shutdown();
+}
+
+void PAIP::set_output_callback(void (*on_output_callback)(const char*))
+{
+    Stockfish::Output::set_output_callback(on_output_callback);
 }
 
 
 extern "C" {
-void PIKAFISH_API PAIP_init()
+PIKAFISH_API void PAIP_init()
 {
     PAIP::init();
 }
 
-void PIKAFISH_API PAIP_run(const char* command)
+PIKAFISH_API void PAIP_run(const char* command)
 {
     PAIP::run(command);
 }
 
-void PIKAFISH_API PAIP_shutdown()
+PIKAFISH_API void PAIP_shutdown()
 {
     PAIP::shutdown();
 }
+
+PIKAFISH_API void PAIP_set_output_callback(void (*on_output_callback)(const char*))
+{
+    PAIP::set_output_callback(on_output_callback);
 }
+}
+#endif
