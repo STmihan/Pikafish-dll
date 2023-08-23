@@ -317,41 +317,29 @@ inline int popcount(Bitboard b) {
 inline Square lsb(Bitboard b) {
   assert(b);
 
-#if defined(_MSC_VER) // MSVC
+#if defined(_MSC_VER) && !defined(NN_NINTENDO_SDK)// MSVC
 
   unsigned long idx;
-#if defined(NN_NINTENDO_SDK)
-  if (uint32_t(b))
-#else
+
   if (uint64_t(b))
-#endif
   {
-#if defined(NN_NINTENDO_SDK)
-  _BitScanForward(&idx, uint32_t(b));
-  return Square(idx);
-#elif defined(_WIN64)
       _BitScanForward64(&idx, b);
       return Square(idx);
-
-#endif
   }
   else
   {
-#if defined(NN_NINTENDO_SDK)
-      _BitScanForward(&idx, uint32_t(b >> 64));
-      return Square(idx + 64);
-#elif defined(_WIN64)
       _BitScanForward64(&idx, b >> 64);
       return Square(idx + 64);
-
-#endif
   }
 
 #else // Assumed gcc or compatible compiler
-    //
-    // if (uint64_t(b))
-    //     return Square(__builtin_ctzll(b));
-    // return Square(__builtin_ctzll(b >> 64) + 64);
+#ifdef NN_NINTENDO_SDK
+    if (uint32_t(b))
+#else
+    if (uint64_t(b))
+#endif
+        return Square(__builtin_ctzll(b));
+    return Square(__builtin_ctzll(b >> 64) + 64);
 
 #endif
 }

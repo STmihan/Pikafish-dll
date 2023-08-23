@@ -23,7 +23,7 @@ void PAIP::init()
     auto argv = new char* [1];
 #if !defined(NN_NINTENDO_SDK)
     std::string path = std::filesystem::current_path().string();
-    argv[0] = path.data;
+    argv[0] = path.data();
 #else
     argv[0] = "";
 #endif

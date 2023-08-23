@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|NX64">
+      <Configuration>Debug</Configuration>
+      <Platform>NX64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Application.arm.ilp32.nmeta" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Application.aarch64.lp64.nmeta" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="NintendoSDK_Application.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PikafishTestSwitch.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\Pikafish.vcxproj">
+      <Project>{d56ac1d4-27f1-44dd-bdc7-874ff27a4e3b}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{423C16F1-10AE-42F8-9A53-A29380246119}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|NX64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <NintendoSdkRoot>$(NINTENDO_SDK_ROOT)</NintendoSdkRoot>
+    <NintendoSdkSpec>NX</NintendoSdkSpec>
+    <NintendoSdkBuildType>Debug</NintendoSdkBuildType>
+    <ApplicationProgramFormat>Nsp</ApplicationProgramFormat>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|NX64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="ImportNintendoSdk.props" Condition="exists('ImportNintendoSdk.props')" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" Condition="'$(Configuration)|$(Platform)'=='Debug|NX64'">
+    <ApplicationDataDir>$(ProjectDir)dataSrc</ApplicationDataDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|NX64'">
+    <LinkIncremental>true</LinkIncremental>
+    <CppLanguageStandard>Gnu++17</CppLanguageStandard>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|NX64'">
+    <Link>
+      <FinalizeMetaSource>$(ProjectDir)Application.aarch64.lp64.nmeta</FinalizeMetaSource>
+    </Link>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

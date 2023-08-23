@@ -3,15 +3,9 @@
   <PropertyGroup>
     <ShowAllFiles>true</ShowAllFiles>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <NintendoTargetName>Default</NintendoTargetName>
-    <NXTargetSerialNumber>$(NintendoTargetSerialNumber)</NXTargetSerialNumber>
-    <NXTargetName>$(NintendoTargetName)</NXTargetName>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|NX64'">
     <NintendoTargetName>Default</NintendoTargetName>
-    <OasisNXDebuggerSessionType>DELAY</OasisNXDebuggerSessionType>
-    <DebuggerFlavor>OasisNXDebugger</DebuggerFlavor>
+    <NintendoTargetSerialNumber>XAL02100185908</NintendoTargetSerialNumber>
     <NXTargetSerialNumber>$(NintendoTargetSerialNumber)</NXTargetSerialNumber>
     <NXTargetName>$(NintendoTargetName)</NXTargetName>
   </PropertyGroup>
