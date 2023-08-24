@@ -1,16 +1,17 @@
 ﻿// PikafishTestSwitch.cpp : Defines the entry point to the NintendoSDK application.
 //
-
-#include "papi/paip.h"
-#include "nn/nn_Log.h"
 #include <cstdlib>
 #include <cstring>
 #include <new>
-
+#include <thread>
 #include <nn/fs.h>
 #include <nn/nn_Assert.h>
 #include <nn/nn_Log.h>
 #include <nn/nn_Abort.h>
+
+#include "papi/papi.h"
+#include "nn/nn_Log.h"
+
 
 
 
@@ -47,7 +48,10 @@ extern "C" void nnMain()
     }
 
 	PAIP_init();
-	PAIP_run("go depth 10");
+    // PAIP_run("setoption name Threads value 2");
+    PAIP_run("setoption name EvalFile value rom:/test/pikafish.nnue");
+	PAIP_run("go depth 1");
+    //std::this_thread::sleep_for(std::chrono::microseconds(10000));
 	PAIP_shutdown();
 
     {

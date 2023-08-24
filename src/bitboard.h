@@ -333,11 +333,8 @@ inline Square lsb(Bitboard b) {
   }
 
 #else // Assumed gcc or compatible compiler
-#ifdef NN_NINTENDO_SDK
-    if (uint32_t(b))
-#else
-    if (uint64_t(b))
-#endif
+    uint64_t i = b.get1();
+    if (i)
         return Square(__builtin_ctzll(b));
     return Square(__builtin_ctzll(b >> 64) + 64);
 

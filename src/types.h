@@ -214,6 +214,8 @@ struct Bitboard {
         return Bitboard(b64[0] * x.b64[1] + b64[1] * x.b64[0] + (a_hi * b_hi) + (t1 >> 32) + (t2 >> 32),
             (t2 << 32) + (a_lo * b_lo & 0xFFFFFFFF));
     }
+
+    inline uint64_t get1() const { return b64[1]; }
 };
 #endif
 

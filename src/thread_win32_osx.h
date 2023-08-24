@@ -60,6 +60,42 @@ public:
 };
 
 } // namespace Stockfish
+#elif defined(USE_NNTHREADS)
+
+#include <nn/os.h>
+#include <nn/nn_Assert.h>
+#include <nn/nn_Result.h>
+
+namespace Stockfish {
+
+    static const size_t TH_STACK_SIZE = 16 * 1024 * 1024;
+
+
+    template <class T, class P = std::pair<T*, void(T::*)()>>
+    void start_routine(void* ptr)
+    {
+        P* p = reinterpret_cast<P*>(ptr);
+        (p->first->*(p->second))(); // Call member function pointer
+        delete p;
+    }
+
+    class NativeThread {
+        NN_OS_ALIGNAS_THREAD_STACK char ThreadStack[TH_STACK_SIZE];
+        nn::os::ThreadType thread;
+
+    public:
+        template<class T, class P = std::pair<T*, void(T::*)()>>
+        explicit NativeThread(void(T::* fun)(), T* obj) {
+            nn::Result result = nn::os::CreateThread(&thread, start_routine<T>, new P(obj, fun), ThreadStack, TH_STACK_SIZE, nn::os::DefaultThreadPriority);
+            NN_ASSERT(result.IsSuccess(), "CANNOT CREATE A THREAD");
+            nn::os::StartThread(&thread);
+        }
+        void join() { 
+            nn::os::WaitThread(&thread);
+        }
+    };
+
+} // namespace Stockfish
 
 #else // Default case: use STL classes
 

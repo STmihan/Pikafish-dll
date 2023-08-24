@@ -24,7 +24,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="Application.arm.ilp32.nmeta" />
     <CustomBuild Include="Application.aarch64.lp64.nmeta" />
     <CustomBuild Include="NintendoSDK_Application.bmp">
       <Filter>Resource Files</Filter>

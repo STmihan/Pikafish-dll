@@ -7,9 +7,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="Application.arm.ilp32.nmeta" />
-  </ItemGroup>
-  <ItemGroup>
     <CustomBuild Include="Application.aarch64.lp64.nmeta" />
   </ItemGroup>
   <ItemGroup>
@@ -49,10 +46,17 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|NX64'">
     <LinkIncremental>true</LinkIncremental>
     <CppLanguageStandard>Gnu++17</CppLanguageStandard>
+    <NRODeployPath>
+    </NRODeployPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|NX64'">
     <Link>
       <FinalizeMetaSource>$(ProjectDir)Application.aarch64.lp64.nmeta</FinalizeMetaSource>
+      <AdditionalOptions>-v %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalNRODependencies>%(AdditionalNRODependencies)</AdditionalNRODependencies>
+      <NRRFileName>
+      </NRRFileName>
     </Link>
     <ClCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>

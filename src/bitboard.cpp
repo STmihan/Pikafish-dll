@@ -262,11 +262,10 @@ namespace {
           m.mask &= ~edges;
 
         if (HasPext)
-#if defined(NN_NINTENDO_SDK) 
-          m.shift = popcount(uint32_t(m.mask));
-#else
-          m.shift = popcount(uint64_t(m.mask));
-#endif
+        {
+            uint64_t arg = m.mask.get1();
+            m.shift = popcount(arg);
+        }
         else
           m.shift = 128 - popcount(m.mask);
 

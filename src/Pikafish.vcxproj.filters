@@ -60,9 +60,6 @@
     <ClCompile Include="ucioption.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="external\zip.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="nnue\evaluate_nnue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -73,6 +70,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="output\output.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="external\zip.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -125,12 +125,6 @@
     <ClInclude Include="uci.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="external\miniz.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="external\zip.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="nnue\evaluate_nnue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -164,10 +158,16 @@
     <ClInclude Include="nnue\layers\sqr_clipped_relu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="papi\paip.h">
+    <ClInclude Include="output\output.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="output\output.h">
+    <ClInclude Include="external\miniz.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="external\zip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="papi\papi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

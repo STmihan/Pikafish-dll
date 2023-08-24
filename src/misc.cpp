@@ -67,7 +67,9 @@ using fun8_t = bool(*)(HANDLE, BOOL, PTOKEN_PRIVILEGES, DWORD, PTOKEN_PRIVILEGES
 
 #include "misc.h"
 #include "thread.h"
+#if !defined(NN_NINTENDO_SDK)
 #include "external/zip.h"
+#endif // !1
 
 using namespace std;
 
@@ -791,6 +793,11 @@ void init([[maybe_unused]] int argc, char* argv[]) {
 } // namespace CommandLine
 
 std::stringstream read_zipped_nnue(const std::string& fpath) {
+#ifdef NN_NINTENDO_SDK
+    std::stringstream ss;
+    return ss;
+#else
+
     void* buf = NULL;
     size_t bufsize = 0;
 
@@ -810,6 +817,7 @@ std::stringstream read_zipped_nnue(const std::string& fpath) {
     free(buf);
 
     return ss;
+#endif // 
 }
 
 } // namespace Stockfish

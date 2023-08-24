@@ -8,7 +8,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 #define __STDC_WANT_LIB_EXT1__ 1
-
+#ifndef NN_NINTENDO_SDK
 #include <errno.h>
 #include <sys/stat.h>
 #include <time.h>
@@ -1782,3 +1782,4 @@ int zip_extract(const char *zipname, const char *dir,
 
   return zip_archive_extract(&zip_archive, dir, on_extract, arg);
 }
+#endif // !1

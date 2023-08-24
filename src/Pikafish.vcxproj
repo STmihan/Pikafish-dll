@@ -45,6 +45,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|NX64'">
     <CppLanguageStandard>Gnu++17</CppLanguageStandard>
+    <SafeStackEnabled>false</SafeStackEnabled>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -62,13 +63,18 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
-      <PreprocessorDefinitions>NDEBUG;USE_NEON;PIKAFISH_EXPORTS;NO_PREFETCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;USE_PTHREADS;USE_NEON;USE_POPCNT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <ExtendedDiagnostics>true</ExtendedDiagnostics>
+      <StackProtector>None</StackProtector>
     </ClCompile>
     <Link>
       <StackReserveSize>8388608 </StackReserveSize>
-      <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /Y "$(OutDir)$(ProjectName).a" "D:\Projects\Just Xiangqi\Assets\TestDll\Switch"
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="benchmark.cpp" />
@@ -114,7 +120,7 @@
     <ClInclude Include="nnue\nnue_common.h" />
     <ClInclude Include="nnue\nnue_feature_transformer.h" />
     <ClInclude Include="output\output.h" />
-    <ClInclude Include="papi\paip.h" />
+    <ClInclude Include="papi\papi.h" />
     <ClInclude Include="position.h" />
     <ClInclude Include="search.h" />
     <ClInclude Include="thread.h" />
